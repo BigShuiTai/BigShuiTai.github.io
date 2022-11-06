@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+
+<head>
+    
+    <title>Ubuntu 22.04.1 LTS上安装Realtek 8852BE (RTW89)网卡驱动 - Shuitai&#39;s blog</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://libs.dapiya.top/img/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="前言在双十一活动上，我看中了Lenovo ThinkBook 16+（Intel i5版本挺便宜的）。 买下来到货之后，便心血来潮装了个Ubuntu 22.04作为编写blog的地方，结果发现Ubuntu没有Windows 11有的wifi选项，只有以太网（有线网络）能用。 摸索在装之前，我拿了旧电脑进行安装尝试，那边是有wifi选项的。（实际上这不是我的电脑，后面被我爸呵斥停止安装了） 没有了w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 22.04.1 LTS上安装Realtek 8852BE (RTW89)网卡驱动">
+<meta property="og:url" content="https://bigshuitai.github.io/ubuntu-rtw89.html">
+<meta property="og:site_name" content="Shuitai&#39;s blog">
+<meta property="og:description" content="前言在双十一活动上，我看中了Lenovo ThinkBook 16+（Intel i5版本挺便宜的）。 买下来到货之后，便心血来潮装了个Ubuntu 22.04作为编写blog的地方，结果发现Ubuntu没有Windows 11有的wifi选项，只有以太网（有线网络）能用。 摸索在装之前，我拿了旧电脑进行安装尝试，那边是有wifi选项的。（实际上这不是我的电脑，后面被我爸呵斥停止安装了） 没有了w">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libs.dapiya.top/img/rtw89-installation-success.png">
+<meta property="article:published_time" content="2022-11-06T04:10:00.000Z">
+<meta property="article:modified_time" content="2022-11-06T05:00:00.000Z">
+<meta property="article:author" content="Shuitai">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="RTW89">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libs.dapiya.top/img/rtw89-installation-success.png">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1667714529346">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1667714529346">
+
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://tuapi.eees.cc/api.php?category=dongman&amp;type=302)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="Shuitai" class="mdui-btn mdui-btn-icon"><img src="https://libs.dapiya.top/img/5f2f8d9be80579ad6f2a3d977e8821cd.webp" alt="Shuitai"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="Shuitai">
+            <img src="https://libs.dapiya.top/img/5f2f8d9be80579ad6f2a3d977e8821cd.webp" alt="Shuitai" alt="Shuitai">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>2</div>
+        <div><span>Tags</span>2</div>
+        <div><span>Categories</span>2</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/friends.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/donate.html" title="给我赞助">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                给我赞助
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于站长">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于站长
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="Search" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1667714529346"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://jq.qq.com/?_wv=1027&k=TTA1qOej"
+			target="_blank"
+			mdui-tooltip="{content: 'QQ群'}"
+			style="
+				color: rgb(249, 174, 8);
+				background-color: rgba(249, 174, 8, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-QQ"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://libs.dapiya.top/img/wechat.jpg"
+			target="_blank"
+			mdui-tooltip="{content: '微信'}"
+			style="
+				color: rgb(28, 214, 108);
+				background-color: rgba(28, 214, 108, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-wechat-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/396884783"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/BigShuiTai/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://www.zhihu.com/people/keonume"
+			target="_blank"
+			mdui-tooltip="{content: '知乎'}"
+			style="
+				color: rgb(5, 109, 232);
+				background-color: rgba(5, 109, 232, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-zhihu"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://weibo.com/u/7375195654"
+			target="_blank"
+			mdui-tooltip="{content: '微博'}"
+			style="
+				color: rgb(227, 36, 40);
+				background-color: rgba(227, 36, 40, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-weibo"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:dapiya@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: 'E-Mail'}"
+			style="
+				color: rgb(5, 109, 232);
+				background-color: rgba(5, 109, 232, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Linux/">Linux</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Linux/Shell/">Shell</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/RTW89/" style="font-size: 10px;">RTW89</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(2);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Archive</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Recent Posts</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/ubuntu-rtw89.html">Ubuntu 22.04.1 LTS上安装Realtek 8852BE (RTW89)网卡驱动</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/05/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 Shuitai
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+    
+        <div class="nexmoe-post-cover"> 
+            <img src="https://tuapi.eees.cc/api.php?category=dongman&type=302" alt="Ubuntu 22.04.1 LTS上安装Realtek 8852BE (RTW89)网卡驱动" loading="lazy">
+            <h1>Ubuntu 22.04.1 LTS上安装Realtek 8852BE (RTW89)网卡驱动</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2022年11月06日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Linux/">Linux</a><a class="nexmoefont icon-appstore-fill -link" href="/categories/Linux/Shell/">Shell</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在双十一活动上，我看中了Lenovo ThinkBook 16+<del>（Intel i5版本挺便宜的）</del>。</p>
+<p>买下来到货之后，便心血来潮装了个Ubuntu 22.04作为编写blog的地方，结果发现Ubuntu没有Windows 11有的wifi选项，只有以太网（有线网络）能用。</p>
+<h3 id="摸索"><a href="#摸索" class="headerlink" title="摸索"></a>摸索</h3><p>在装之前，我拿了旧电脑进行安装尝试，那边是有wifi选项的。<del>（实际上这不是我的电脑，后面被我爸呵斥停止安装了）</del></p>
+<p>没有了wifi选项，让我怀疑是不是Ubuntu 22.04所配置的内核（Linux Kernel 5.15.0-43-generic）没有与该电脑的无线网卡对应的驱动。</p>
+<p>于是我先换回Windows 11系统，查看电脑配置的网卡。</p>
+<p>一看是Intel Realtek 8852BE，心想，linux绝对不可能有这类网卡驱动了。</p>
+<p>然后我去度娘、CSDN、Google等处，都让我自己用以太网自己安装网卡驱动。<del>TMD 这怎么可能啊 学校的有线网络服务比我流量卡100G流量费还贵 带宽还烂</del></p>
+<p>于是我只能在windows系统自己找办法安装所需了。</p>
+<p>运气很好，我很快在GitHub上找到了与我电脑网卡型号有关的repo（度娘直接搜<code>Intel Realtek 8852BE</code>）：<a target="_blank" rel="noopener" href="https://github.com/lwfinger/rtw89">lwfinger/rtw89</a>。</p>
+<h2 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h2><p>让我们来看看这个repo的内容：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-comment">## A repo for the newest Realtek rtlwifi codes.</span><br><br>This branch was created <span class="hljs-built_in">from</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">version</span> merged <span class="hljs-keyword">into</span> <span class="hljs-keyword">the</span> wireless-drivers-next repo, which is <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> <span class="hljs-number">5.16</span> kernel. IF YOU USE DRIVERS FROM THIS REPO FOR KERNELS <span class="hljs-number">5.16</span>+, TOU MUST BLACKLIST THE KERNEL VERSIONS!!!! FAILING TO DO THIS WILL RESULT IN ALL MANNER OF STRANGE ERRORS.<br><br>This code will build <span class="hljs-keyword">on</span> <span class="hljs-title">any</span> <span class="hljs-title">kernel</span> <span class="hljs-title">5</span><span class="hljs-number">.7</span> <span class="hljs-title">and</span> <span class="hljs-title">newer</span> <span class="hljs-title">as</span> <span class="hljs-title">long</span> <span class="hljs-title">as</span> <span class="hljs-title">the</span> <span class="hljs-title">distro</span> <span class="hljs-title">has</span> <span class="hljs-title">not</span> <span class="hljs-title">modified</span> <span class="hljs-title">any</span> <span class="hljs-title">of</span> <span class="hljs-title">the</span> <span class="hljs-title">kernel</span> <span class="hljs-title">APIs</span>. <span class="hljs-title">IF</span> <span class="hljs-title">YOU</span> <span class="hljs-title">RUN</span> <span class="hljs-title">UBUNTU</span>, <span class="hljs-title">YOU</span> <span class="hljs-title">CAN</span> <span class="hljs-title">BE</span> <span class="hljs-title">ASSURED</span> <span class="hljs-title">THAT</span> <span class="hljs-title">THE</span> <span class="hljs-title">APIs</span> <span class="hljs-title">HAVE</span> <span class="hljs-title">CHANGED</span>. <span class="hljs-title">NO</span>, <span class="hljs-title">I</span> <span class="hljs-title">WILL</span> <span class="hljs-title">NOT</span> <span class="hljs-title">MODIFY</span> <span class="hljs-title">THE</span> <span class="hljs-title">SOURCE</span> <span class="hljs-title">FOR</span> <span class="hljs-title">YOU</span>. <span class="hljs-title">YOU</span> <span class="hljs-title">ARE</span> <span class="hljs-title">ON</span> <span class="hljs-title">YOUR</span> <span class="hljs-title">OWN</span>!!!!!<br><br>I am working <span class="hljs-keyword">on</span> <span class="hljs-title">fixing</span> <span class="hljs-title">builds</span> <span class="hljs-title">on</span> <span class="hljs-title">older</span> <span class="hljs-title">kernels</span>.<br><br>This repository includes drivers <span class="hljs-keyword">for</span> <span class="hljs-keyword">the</span> following card:<br><br>Realtek <span class="hljs-number">8852</span>AE, <span class="hljs-number">8852</span>BE, <span class="hljs-keyword">and</span> <span class="hljs-number">8853</span>CE<br><br>If you are looking <span class="hljs-keyword">for</span> <span class="hljs-keyword">a</span> driver <span class="hljs-keyword">for</span> chips such <span class="hljs-keyword">as</span> RTL8188EE, RTL8192CE, RTL8192CU, RTL8192DE, RTL8192EE, RTL8192SE, RTL8723AE, RTL8723BE, <span class="hljs-keyword">or</span> RTL8821AE, these should be provided <span class="hljs-keyword">by</span> your kernel. If <span class="hljs-keyword">not</span>, <span class="hljs-keyword">then</span> you should go <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> Backports Project (<span class="hljs-keyword">https</span>://backports.wiki.kernel.org/index.php/Main_Page) <span class="hljs-built_in">to</span> obtain <span class="hljs-keyword">the</span> necessary code.<br></code></pre></td></tr></table></figure>
+
+<p>省流：仅适配<code>Realtek 8852AE, 8852BE, 8853CE</code>这仨无线网卡型号，并且内核版本要在5.7及以上，5.16及以下（因为5.16以上版本有可能会出现莫名其妙的bug）。</p>
+<p>再来看看安装步骤：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs clean">## Requirements<br><br>You will need to install <span class="hljs-string">&quot;make&quot;</span>, <span class="hljs-string">&quot;gcc&quot;</span>, <span class="hljs-string">&quot;kernel headers&quot;</span>, <span class="hljs-string">&quot;kernel build essentials&quot;</span>, and <span class="hljs-string">&quot;git&quot;</span>.<br><br>For Ubuntu: You can install them <span class="hljs-keyword">with</span> the following command<br><br>sudo apt-get update<br>sudo apt-get install make gcc linux-headers-$(uname -r) build-essential git<br><br>## Installation<br><br>### For all distros:<br><br>git clone https:<span class="hljs-comment">//github.com/lwfinger/rtw89.git</span><br>cd rtw89<br>make<br>sudo make install<br><br>## Installation <span class="hljs-keyword">with</span> <span class="hljs-keyword">module</span> signing for SecureBoot<br><br>### For all distros:<br><br>git clone https:<span class="hljs-comment">//github.com/lwfinger/rtw89.git</span><br>cd rtw89<br>make<br>sudo make sign-install<br></code></pre></td></tr></table></figure>
+
+<p>大概意思是，安装驱动前你得先安装<code>make, gcc, kernel headers, kernel build essentials, git</code>这五样东西。</p>
+<p>然后我试了一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ make --version<br>make: 未找到命令<br><br>$ gcc --version<br>gcc: 未找到命令<br></code></pre></td></tr></table></figure>
+
+<p>又要我自己一个人手动安装了……<del>还好我自己就有一个ubuntu服务器，可以手动下载deb包并拷贝过来。</del></p>
+<p>经过调查，安装的核心都在build-essential上，我可以通过build-essential进行依赖包递归搜索。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#!usr/bin/bash</span><br><br>logfile=<span class="hljs-string">&quot;./apt-downloaded.log&quot;</span><br>ret=<span class="hljs-string">&quot;&quot;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">getDepends</span></span>() &#123;<br>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;fileName is&quot;</span> <span class="hljs-variable">$1</span>&gt;&gt;<span class="hljs-variable">$logfile</span><br>   <span class="hljs-comment"># use tr to del &lt; &gt;</span><br>   ret=`apt-cache depends <span class="hljs-variable">$1</span>|grep Depends |<span class="hljs-built_in">cut</span> -d: -f2 |<span class="hljs-built_in">tr</span> -d <span class="hljs-string">&quot;&lt;&gt;&quot;</span>`<br>   <span class="hljs-built_in">echo</span> <span class="hljs-variable">$ret</span>|<span class="hljs-built_in">tee</span>  -a <span class="hljs-variable">$logfile</span><br>&#125;<br><br><span class="hljs-comment"># 需要获取其所依赖包的包</span><br>libs=<span class="hljs-string">&quot;build-essential&quot;</span><br><br><span class="hljs-comment"># download libs dependen. deep in 5</span><br><span class="hljs-comment"># downloaded files will be saved in /var/cache/apt/archives</span><br>i=0<br><span class="hljs-keyword">while</span> [ <span class="hljs-variable">$i</span> -lt 5 ] ;<br><span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">let</span> i++<br>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$i</span><br>    <span class="hljs-comment"># download libs</span><br>    newlist=<span class="hljs-string">&quot; &quot;</span><br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-variable">$libs</span><br>    <span class="hljs-keyword">do</span><br>        added=<span class="hljs-string">&quot;<span class="hljs-subst">$(getDepends $j)</span>&quot;</span><br>        newlist=<span class="hljs-string">&quot;<span class="hljs-variable">$newlist</span> <span class="hljs-variable">$added</span>&quot;</span><br>        apt-get install <span class="hljs-variable">$added</span> --reinstall -d -y<br>    <span class="hljs-keyword">done</span><br>    libs=<span class="hljs-variable">$newlist</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<p>就这样，所有依赖包安装完成了，把所有安装好的包复制到任意路径中，输入以下命令运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 注意事项：</span><br><span class="hljs-comment"># 1.请不要使用dpkg -i命令，此命令不会按照依赖顺序安装，运行后不仅会报出依赖包未安装的错误，还会把apt搞崩，严重不推荐；</span><br><span class="hljs-comment"># 2.请在apt install前加入sudo命令以root权限运行，或者直接登录root账号，这里就不多说了；</span><br><span class="hljs-comment"># 3.在安装包名称前请加上路径名称，如./xxx，否则apt会从/var/cache/apt/archives上查找安装包，导致文件不存在的报错。</span><br>$ sudo apt install ./build-essential*<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后，再把自己提前准备好的rtw89文件夹复制到任意路径中，然后再运行上面安装步骤中的<code>Installation</code>下的命令，等待安装完成。</p>
+<p>当你在设置窗口中看到以下东西时，说明你已经成功安装了Realtek 8852BE的网卡驱动啦！</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.top/img/rtw89-installation-success.png" alt="success image" data-caption="success image" loading="lazy"></p>
+
+    
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>Shuitai<br>
+        <strong>Link：</strong><a href="https://bigshuitai.github.io/ubuntu-rtw89.html" title="https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;ubuntu-rtw89.html" target="_blank" rel="noopener">https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;ubuntu-rtw89.html</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/RTW89/" rel="tag">RTW89</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          
+          
+              <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script type="text/javascript">
+    let gitalk = new Gitalk({
+        clientID: '9625cce808d462e02e35',
+        clientSecret: '3c92e16b433320d2c806ed3467e6ec3786892f27',
+        repo: 'BigShuiTai.github.io',
+        owner: 'BigShuiTai',
+        admin: 'BigShuiTai',
+        id: md5(location.pathname),
+        distractionFreeMode: true,
+        proxy: 'https://fast-dawn-89938.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+</script>
+          
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%91%B8%E7%B4%A2"><span class="toc-number">1.1.</span> <span class="toc-text">摸索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.</span> <span class="toc-text">安装驱动</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="Search"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1667714529352"></script>
+
+
+
+</body>
+
+</html>
