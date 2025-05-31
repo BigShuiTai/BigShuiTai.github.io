@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     
     <link rel="shortcut icon" href="https://libs.dapiya.top/img/favicon.ico" type="image/x-icon" />
-    <meta name="description" content="注意事项 我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。  在主板内设置Above 4G Decoding开启，且需要带上亮机卡，否则无法点亮。  由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，建议安装6.3.3或6.3.4版本。   安装流程代码1234567891011amdgpu-install --uninstalla">
+    <meta name="description" content="注意事项 我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。  主板需要两个PCIe插槽，如一部分B板或X&#x2F;Z板。  在主板内设置Above 4G Decoding开启，且需要带上亮机卡，否则无法点亮。  由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，建议安装6.3.3或6.3.4版本。   安装流程代码1234567891011">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Ubuntu 22.04上安装MI50显卡驱动和ROCm软件">
 <meta property="og:url" content="https://bigshuitai.github.io/mi50-rocm-install.html">
 <meta property="og:site_name" content="Shuitai&#39;s blog">
-<meta property="og:description" content="注意事项 我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。  在主板内设置Above 4G Decoding开启，且需要带上亮机卡，否则无法点亮。  由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，建议安装6.3.3或6.3.4版本。   安装流程代码1234567891011amdgpu-install --uninstalla">
+<meta property="og:description" content="注意事项 我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。  主板需要两个PCIe插槽，如一部分B板或X&#x2F;Z板。  在主板内设置Above 4G Decoding开启，且需要带上亮机卡，否则无法点亮。  由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，建议安装6.3.3或6.3.4版本。   安装流程代码1234567891011">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-31T19:00:00.000Z">
 <meta property="article:modified_time" content="2025-05-31T19:00:00.000Z">
@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1748717462718">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1748717698102">
     
-    <link rel="stylesheet" href="/css/style.css?v=1748717462718">
+    <link rel="stylesheet" href="/css/style.css?v=1748717698102">
 
     
 <meta name="generator" content="Hexo 5.4.2"></head>
@@ -117,7 +117,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1748717462718"></script>
+	<script async src="/js/search.js?v=1748717698102"></script>
 
 
 
@@ -372,6 +372,8 @@
     <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
 <li><p>我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。</p>
 </li>
+<li><p>主板需要两个PCIe插槽，如一部分B板或X/Z板。</p>
+</li>
 <li><p>在主板内<strong>设置Above 4G Decoding开启</strong>，且需要带上亮机卡，否则无法点亮。</p>
 </li>
 <li><p>由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，<strong>建议安装6.3.3或6.3.4版本</strong>。</p>
@@ -484,7 +486,7 @@
 
  
 
-<script async src="/js/app.js?v=1748717462720"></script>
+<script async src="/js/app.js?v=1748717698103"></script>
 
 
 
