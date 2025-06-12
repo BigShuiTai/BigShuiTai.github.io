@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1749314179320">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1749724087297">
     
-    <link rel="stylesheet" href="/css/style.css?v=1749314179320">
+    <link rel="stylesheet" href="/css/style.css?v=1749724087297">
 
     
 <meta name="generator" content="Hexo 5.4.2"></head>
@@ -117,7 +117,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1749314179320"></script>
+	<script async src="/js/search.js?v=1749724087297"></script>
 
 
 
@@ -379,7 +379,7 @@
 <li><p>由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，<strong>建议安装6.3.3或6.3.4版本</strong>。</p>
 </li>
 </ol>
-<h2 id="安装流程代码"><a href="#安装流程代码" class="headerlink" title="安装流程代码"></a>安装流程代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">amdgpu-install --uninstall<br>apt-get purge amdgpu-install &amp;&amp; apt update<br><br>wget https://repo.radeon.com/amdgpu-install/6.3.4/ubuntu/jammy/amdgpu-install_6.3.60304-1_all.deb<br>apt-get install ./amdgpu-install_6.3.60304-1_all.deb &amp;&amp; apt update<br>apt install amdgpu-dkms rocm<br><br>usermod -a -G video <span class="hljs-variable">$LOGNAME</span><br>usermod -a -G render <span class="hljs-variable">$LOGNAME</span><br><br>rocm-smi <span class="hljs-comment"># 查看AMD显卡信息命令，重启后执行以验证安装</span><br></code></pre></td></tr></table></figure>
+<h2 id="安装流程代码"><a href="#安装流程代码" class="headerlink" title="安装流程代码"></a>安装流程代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 卸载ROCm和AMD驱动，未安装过的直接跳过该步骤</span><br>amdgpu-install --uninstall<br>apt-get purge amdgpu-install &amp;&amp; apt update<br><br><span class="hljs-comment"># 安装ROCm和AMD驱动</span><br>wget https://repo.radeon.com/amdgpu-install/6.3.4/ubuntu/jammy/amdgpu-install_6.3.60304-1_all.deb<br>apt-get install ./amdgpu-install_6.3.60304-1_all.deb &amp;&amp; apt update<br>apt install amdgpu-dkms rocm<br><br>usermod -a -G video <span class="hljs-variable">$LOGNAME</span><br>usermod -a -G render <span class="hljs-variable">$LOGNAME</span><br><br>rocm-smi <span class="hljs-comment"># 查看AMD显卡信息命令，重启后执行以验证安装</span><br></code></pre></td></tr></table></figure>
 
 <p>以上步骤完成后需要<strong>重启</strong>。重启后还需进入BIOS<strong>设置CSM（兼容性模块支持）为关闭</strong>。</p>
 <p>注意：<strong>亮机卡不要拔出来</strong>！！！</p>
@@ -490,7 +490,7 @@
 
  
 
-<script async src="/js/app.js?v=1749314179322"></script>
+<script async src="/js/app.js?v=1749724087300"></script>
 
 
 
