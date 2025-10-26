@@ -4,35 +4,33 @@
 
 <head>
     
-    <title>在Ubuntu 22.04上安装MI50显卡驱动和ROCm软件 - Shuitai&#39;s blog</title>
+    <title>使用Clonezilla（再生龙）克隆Ubuntu系统 - Shuitai&#39;s blog</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     
     <link rel="shortcut icon" href="https://libs.dapiya.cn/img/favicon.ico" type="image/x-icon" />
-    <meta name="description" content="注意事项 我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。  对于家用主板，需要两个PCIe x16插槽，如X（AMD）板、Z（Intel）板，以及一部分B板。  在主板内设置Above 4G Decoding开启，且需要带上亮机卡，否则无法点亮。  由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，建议安装6.3.3或6.3.4版">
+    <meta name="description" content="使用Clonezilla的原因这次要进行服务器系统迁移，即将一个硬盘上的全部内容搬迁到另一个新的硬盘，于是我想到了可以用再生龙去实现迁移系统。 其实大约在一年半前我使用过再生龙进行了同样的操作。那次迁移过程比较顺利，没有遇到什么坑，所以没有去写这个博客。 但这次运气不好给我碰上了，导致我折腾了一整个晚上（几乎通宵）才把系统迁移完成。故写一篇来记录自己的踩坑情况和解决方案。 Clonezilla介绍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在Ubuntu 22.04上安装MI50显卡驱动和ROCm软件">
-<meta property="og:url" content="https://bigshuitai.github.io/mi50-rocm-install.html">
+<meta property="og:title" content="使用Clonezilla（再生龙）克隆Ubuntu系统">
+<meta property="og:url" content="https://bigshuitai.github.io/clonezilla-usage.html">
 <meta property="og:site_name" content="Shuitai&#39;s blog">
-<meta property="og:description" content="注意事项 我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。  对于家用主板，需要两个PCIe x16插槽，如X（AMD）板、Z（Intel）板，以及一部分B板。  在主板内设置Above 4G Decoding开启，且需要带上亮机卡，否则无法点亮。  由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，建议安装6.3.3或6.3.4版">
+<meta property="og:description" content="使用Clonezilla的原因这次要进行服务器系统迁移，即将一个硬盘上的全部内容搬迁到另一个新的硬盘，于是我想到了可以用再生龙去实现迁移系统。 其实大约在一年半前我使用过再生龙进行了同样的操作。那次迁移过程比较顺利，没有遇到什么坑，所以没有去写这个博客。 但这次运气不好给我碰上了，导致我折腾了一整个晚上（几乎通宵）才把系统迁移完成。故写一篇来记录自己的踩坑情况和解决方案。 Clonezilla介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-05-31T19:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-31T19:00:00.000Z">
+<meta property="article:published_time" content="2025-10-26T19:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-26T19:00:00.000Z">
 <meta property="article:author" content="Shuitai">
 <meta property="article:tag" content="Ubuntu">
-<meta property="article:tag" content="AMD">
-<meta property="article:tag" content="ROCm">
-<meta property="article:tag" content="MI50">
+<meta property="article:tag" content="Clonezilla">
 <meta name="twitter:card" content="summary">
     
 <link rel="stylesheet" href="/lib/fancybox/fancybox.css">
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1761493791303">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1761493791300">
     
-    <link rel="stylesheet" href="/css/style.css?v=1761493791303">
+    <link rel="stylesheet" href="/css/style.css?v=1761493791300">
 
     
 <meta name="generator" content="Hexo 5.4.2"></head>
@@ -117,7 +115,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1761493791303"></script>
+	<script async src="/js/search.js?v=1761493791300"></script>
 
 
 
@@ -353,14 +351,14 @@
   <article>
     
         <div class="nexmoe-post-cover"> 
-            <img src="https://www.dmoe.cc/random.php" alt="在Ubuntu 22.04上安装MI50显卡驱动和ROCm软件" loading="lazy">
-            <h1>在Ubuntu 22.04上安装MI50显卡驱动和ROCm软件</h1>
+            <img src="https://www.dmoe.cc/random.php" alt="使用Clonezilla（再生龙）克隆Ubuntu系统" loading="lazy">
+            <h1>使用Clonezilla（再生龙）克隆Ubuntu系统</h1>
         </div>
     
     
     <div class="nexmoe-post-meta">
     <div class="nexmoe-rainbow">
-        <a class="nexmoefont icon-calendar-fill">2025年06月01日</a>
+        <a class="nexmoefont icon-calendar-fill">2025年10月27日</a>
         
             <a class="nexmoefont icon-appstore-fill -link" href="/categories/Linux/">Linux</a>
         
@@ -373,26 +371,50 @@
     
 </div>
 
-    <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><p>我的安装环境是Ubuntu 22.04.5，内核版本6.8.0-hwe。</p>
-</li>
-<li><p>对于家用主板，需要两个PCIe x16插槽，如X（AMD）板、Z（Intel）板，以及一部分B板。</p>
-</li>
-<li><p>在主板内<strong>设置Above 4G Decoding开启</strong>，且需要带上亮机卡，否则无法点亮。</p>
-</li>
-<li><p>由于MI50的架构原因（GCN5.1，gfx906），ROCm 6.4及以后的版本无法使用，<strong>建议安装6.3.3或6.3.4版本</strong>。</p>
-</li>
-</ol>
-<h2 id="安装流程代码"><a href="#安装流程代码" class="headerlink" title="安装流程代码"></a>安装流程代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 卸载ROCm和AMD驱动，未安装过的直接跳过该步骤</span><br>amdgpu-install --uninstall<br>apt-get purge amdgpu-install &amp;&amp; apt update<br><br><span class="hljs-comment"># 安装ROCm和AMD驱动</span><br>wget https://repo.radeon.com/amdgpu-install/6.3.4/ubuntu/jammy/amdgpu-install_6.3.60304-1_all.deb<br>apt-get install ./amdgpu-install_6.3.60304-1_all.deb &amp;&amp; apt update<br>apt install amdgpu-dkms rocm<br><br>usermod -a -G video <span class="hljs-variable">$LOGNAME</span><br>usermod -a -G render <span class="hljs-variable">$LOGNAME</span><br><br>rocm-smi <span class="hljs-comment"># 查看AMD显卡信息命令，重启后执行以验证安装</span><br></code></pre></td></tr></table></figure>
-
-<p>以上步骤完成后需要<strong>重启</strong>。重启后还需进入BIOS<strong>设置CSM（兼容性模块支持）为关闭</strong>。</p>
-<p>注意：<strong>亮机卡不要拔出来</strong>！！！</p>
-<h2 id="Q1：为什么要关闭CSM"><a href="#Q1：为什么要关闭CSM" class="headerlink" title="Q1：为什么要关闭CSM"></a>Q1：为什么要关闭CSM</h2><p>AMD的显卡要被ROCm软件识别到的前提是关闭CSM，如果打开了请进入BIOS将这个选项设置为关闭。</p>
-<h2 id="Q2：为什么不要拔出亮机卡"><a href="#Q2：为什么不要拔出亮机卡" class="headerlink" title="Q2：为什么不要拔出亮机卡"></a>Q2：为什么不要拔出亮机卡</h2><p>因为我拔出来之后发现无法识别到MI50了，<del>由于不知道原因</del>只能先装回去并重装驱动。</p>
-<p>服务器部署不太清楚情况，应该有没有也没关系。</p>
+    <h2 id="使用Clonezilla的原因"><a href="#使用Clonezilla的原因" class="headerlink" title="使用Clonezilla的原因"></a>使用Clonezilla的原因</h2><p>这次要进行服务器系统迁移，即将一个硬盘上的全部内容搬迁到另一个新的硬盘，于是我想到了可以用再生龙去实现迁移系统。</p>
+<p>其实大约在一年半前我使用过再生龙进行了同样的操作。那次迁移过程比较顺利，没有遇到什么坑，所以没有去写这个博客。</p>
+<p>但这次运气不好给我碰上了，导致我折腾了一整个晚上（几乎通宵）才把系统迁移完成。故写一篇来记录自己的踩坑情况和解决方案。</p>
+<h2 id="Clonezilla介绍"><a href="#Clonezilla介绍" class="headerlink" title="Clonezilla介绍"></a>Clonezilla介绍</h2><p>再生龙（Clonezilla）是一个免费的灾难恢复、硬盘克隆、硬盘映像档制作的部署和解决方案，由中国台湾的国家高速网络与计算中心（NCHC）所开发，以GNU通用公共许可协议（GPL）发布。</p>
+<p>再生龙基于Partimage，吸取了Norton Ghost和Partition Image的优点，即不仅支持对整个硬盘系统进行克隆，而且也可以克隆单个的分区，这种灵活性更能满足各种使用者的需要，此外支持多种的操作系统与文件系统也是其强大之处。</p>
+<p>相关链接如下：</p>
 <ul>
-<li>2025.06.08注：已经查明白了，我的华硕X570-F在关机后拔出亮机卡再开机会自动将CSM打开，并且无法进入BIOS盲改。</li>
+<li>Clonezilla官方网址：<a target="_blank" rel="noopener" href="http://www.clonezilla.org/">http://www.clonezilla.org/</a></li>
+<li>Clonezilla镜像下载：<a target="_blank" rel="noopener" href="https://clonezilla.nchc.org.tw/clonezilla-live/download/">https://clonezilla.nchc.org.tw/clonezilla-live/download/</a></li>
 </ul>
+<h2 id="制作Clonezilla启动盘"><a href="#制作Clonezilla启动盘" class="headerlink" title="制作Clonezilla启动盘"></a>制作Clonezilla启动盘</h2><p><strong>注：以下步骤为本人操作过程，请根据自己实际情况调整方法。</strong></p>
+<p>在制作启动盘前，需要以下软件和硬件：</p>
+<ul>
+<li>一块容量16GB或以上的USB硬盘</li>
+<li>Clonezilla镜像文件（为.iso文件）</li>
+<li>制作启动盘的软件（本例为Rufus）</li>
+</ul>
+<p>其中Clonezilla镜像文件下载步骤为：点击打开镜像下载链接后，在“分支”列中点击“穩定-替代版”，选择“CPU 架構”为“amd64”，“檔案類別”为“iso”，再点击下载按钮。</p>
+<p>下载好镜像文件后，插入USB硬盘，打开Rufus，选择镜像文件和USB硬盘，文件系统为FAT32。点击“开始”按钮直接开始制作启动盘。</p>
+<p>进度条提示完成后直接退出Rufus并安全弹出USB硬盘。至此再生龙的启动盘制作完成。</p>
+<h2 id="启动Clonezilla并迁移"><a href="#启动Clonezilla并迁移" class="headerlink" title="启动Clonezilla并迁移"></a>启动Clonezilla并迁移</h2><p><strong>注1：以下步骤为本人操作过程，请根据自己实际情况调整方法。</strong></p>
+<p><strong>注2：本文的迁移操作涉及两块硬盘设备之间的直接迁移。若您有多余的USB硬盘或外接硬盘盒，可参考该文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36432129/article/details/130502411">clonezilla(再生龙)克隆linux系统 操作指南</a></strong></p>
+<p>重启服务器，键盘按下DEL或F1键，进入BIOS，启动项选择装有Clonezilla的USB硬盘，然后再次重启。</p>
+<p>成功进入Clonezilla系统后，选择“Clonezilla Live (VGA 800*600)”，或“Clonezilla Live (VGA 800*600, To RAM)”，等待片刻。</p>
+<p>完成初始化后，选择语言栏为“简体中文”，键盘布局选择“不改变”。随后进入选定模式，选择“使用再生龙” - “device-device” - “Beginner（初学者模式，推荐）” - “disk_to_local_disk”。</p>
+<p>之后再生龙会自动检测存在的硬盘列表，并列出所有可用的硬盘名称和ID。在“母盘”选项中选择原来安装Ubuntu系统的旧硬盘，“目标盘”选择自己要迁移到的新硬盘。后续的参数选择默认即可。</p>
+<p><strong>特别警告：千万别选错了盘！迁移操作会将目标盘内容全部擦除！</strong></p>
+<p>参数选择后，再生龙会非常贴心的警告你多次，尤其是第一步会警告你两次，防止你误操作。</p>
+<p>之后等待它全部工作完成即可，直到poweroff操作将机器关机后，就可以把旧硬盘取出来直接用新硬盘跑系统啦。</p>
+<h2 id="踩坑记录与解决方案"><a href="#踩坑记录与解决方案" class="headerlink" title="踩坑记录与解决方案"></a>踩坑记录与解决方案</h2><p>上面的迁移步骤很简单，但是我在选择“目标盘”的时候碰到了一个问题：再生龙找了一段时间提示“找不到磁盘，或者找不到未被挂载的磁盘”，然后报错退出。</p>
+<p>翻阅了各种资料，发现没有相关的情况。于是我咨询了下ChatGPT，给出的答案解决了我的问题。故在此放出解决步骤：</p>
+<ol>
+<li>在Clonezilla界面里按<code>Ctrl+C</code>或选择“进入命令列”，进入Ubuntu命令行</li>
+<li>执行下方代码，完成后执行<code>clonezilla</code>回到操作界面</li>
+<li>重新开始“disk_to_local_disk”的迁移步骤</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo -i<br>lsblk -e7<br><span class="hljs-built_in">cat</span> /proc/partitions<br><span class="hljs-comment"># 假设目标盘是 /dev/nvme1n1（请按 lsblk 实际显示替换）</span><br>wipefs -fa /dev/nvme1n1 <span class="hljs-comment"># 仅在确认目标盘可全盘抹除时执行！</span><br><span class="hljs-comment"># 可选更彻底（同时清 GPT/MBR 元数据）：</span><br>sgdisk --zap-all /dev/nvme1n1<br>partprobe<br></code></pre></td></tr></table></figure>
+
+<p>至此“目标盘”能够识别到自己要迁移到的新硬盘了。</p>
+<h2 id="参考来源"><a href="#参考来源" class="headerlink" title="参考来源"></a>参考来源</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/72a4514751c3">使用Clonezilla(再生龙)克隆、恢复Linux系统</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36432129/article/details/130502411">clonezilla(再生龙)克隆linux系统 操作指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/enweitech/article/details/48173713">使用Clonezilla（”再生龙”）对Linux系统硬盘进行镜像和克隆</a></li>
+</ol>
 
     
   </article>
@@ -401,7 +423,7 @@
       
     <div class="nexmoe-post-copyright">
         <strong>Author：</strong>Shuitai<br>
-        <strong>Link：</strong><a href="https://bigshuitai.github.io/mi50-rocm-install.html" title="https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;mi50-rocm-install.html" target="_blank" rel="noopener">https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;mi50-rocm-install.html</a><br>
+        <strong>Link：</strong><a href="https://bigshuitai.github.io/clonezilla-usage.html" title="https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;clonezilla-usage.html" target="_blank" rel="noopener">https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;clonezilla-usage.html</a><br>
         
             <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
         
@@ -413,7 +435,7 @@
   <div class="nexmoe-post-meta nexmoe-rainbow">
    
     
-        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/AMD/" rel="tag">AMD</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/MI50/" rel="tag">MI50</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/ROCm/" rel="tag">ROCm</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a>
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Clonezilla/" rel="tag">Clonezilla</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a>
     
 </div>
 
@@ -457,7 +479,7 @@
                               <button class="mdui-fab catalog" style="overflow:unset;">
                                   <i class="nexmoefont icon-i-catalog"></i>
                                   <div class="nexmoe-toc">
-                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">安装流程代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q1%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%85%B3%E9%97%ADCSM"><span class="toc-number">3.</span> <span class="toc-text">Q1：为什么要关闭CSM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%A6%81%E6%8B%94%E5%87%BA%E4%BA%AE%E6%9C%BA%E5%8D%A1"><span class="toc-number">4.</span> <span class="toc-text">Q2：为什么不要拔出亮机卡</span></a></li></ol>
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Clonezilla%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">使用Clonezilla的原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clonezilla%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">Clonezilla介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9CClonezilla%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="toc-number">3.</span> <span class="toc-text">制作Clonezilla启动盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8Clonezilla%E5%B9%B6%E8%BF%81%E7%A7%BB"><span class="toc-number">4.</span> <span class="toc-text">启动Clonezilla并迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">5.</span> <span class="toc-text">踩坑记录与解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%9D%A5%E6%BA%90"><span class="toc-number">6.</span> <span class="toc-text">参考来源</span></a></li></ol>
                                   </div>
                               </button>
                           
@@ -494,7 +516,7 @@
 
  
 
-<script async src="/js/app.js?v=1761493791306"></script>
+<script async src="/js/app.js?v=1761493791302"></script>
 
 
 
