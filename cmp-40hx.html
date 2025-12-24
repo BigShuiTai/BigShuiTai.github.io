@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+
+<head>
+    
+    <title>NVIDIA CMP-40HX 使用感想与踩坑记录 - Shuitai&#39;s blog</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <link rel="shortcut icon" href="https://libs.dapiya.cn/img/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="作为垃圾佬，最近装机瘾又犯了，忍不住入手了一块被B站各UP主称赞的“无头骑士”CMP-40HX，据说该矿卡由RTX 2060 Super阉割而来。 看了一下矿卡攻略，某宝叠券叠金币能把价格干到300块甚至更低，还带质保，是比较有性价比的。但究竟好不好用还是得靠实战。 注意事项 40HX只有华硕一家，其使用的散热模具是这个型号。这张卡作为“无头骑士”，自然没有视频输出，所以尽管挡板部分没有去掉输出接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NVIDIA CMP-40HX 使用感想与踩坑记录">
+<meta property="og:url" content="https://bigshuitai.github.io/cmp-40hx.html">
+<meta property="og:site_name" content="Shuitai&#39;s blog">
+<meta property="og:description" content="作为垃圾佬，最近装机瘾又犯了，忍不住入手了一块被B站各UP主称赞的“无头骑士”CMP-40HX，据说该矿卡由RTX 2060 Super阉割而来。 看了一下矿卡攻略，某宝叠券叠金币能把价格干到300块甚至更低，还带质保，是比较有性价比的。但究竟好不好用还是得靠实战。 注意事项 40HX只有华硕一家，其使用的散热模具是这个型号。这张卡作为“无头骑士”，自然没有视频输出，所以尽管挡板部分没有去掉输出接">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic1.jpg">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic2.jpg">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic3.jpg">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic4.jpg">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic5.png">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic6.png">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic7.png">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic8.png">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic9.jpg">
+<meta property="og:image" content="https://libs.dapiya.cn/img/40hx_pic10.png">
+<meta property="article:published_time" content="2025-12-25T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-25T04:00:00.000Z">
+<meta property="article:author" content="Shuitai">
+<meta property="article:tag" content="NVIDIA">
+<meta property="article:tag" content="40HX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libs.dapiya.cn/img/40hx_pic1.jpg">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1766603208242">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1766603208242">
+
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="mdui-drawer-body-left">
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://www.dmoe.cc/random.php)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="Shuitai" class="mdui-btn mdui-btn-icon"><img src="https://libs.dapiya.cn/img/5f2f8d9be80579ad6f2a3d977e8821cd.webp" alt="Shuitai"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="Shuitai">
+            <img src="https://libs.dapiya.cn/img/5f2f8d9be80579ad6f2a3d977e8821cd.webp" alt="Shuitai" alt="Shuitai">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>5</div>
+        <div><span>Tags</span>9</div>
+        <div><span>Categories</span>3</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/friends.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/donate.html" title="给我赞助">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                给我赞助
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于站长">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于站长
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="Search" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1766603208242"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://jq.qq.com/?_wv=1027&k=TTA1qOej"
+			target="_blank"
+			mdui-tooltip="{content: 'QQ群'}"
+			style="
+				color: rgb(249, 174, 8);
+				background-color: rgba(249, 174, 8, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-QQ"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://libs.dapiya.cn/img/wechat.jpg"
+			target="_blank"
+			mdui-tooltip="{content: '微信'}"
+			style="
+				color: rgb(28, 214, 108);
+				background-color: rgba(28, 214, 108, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-wechat-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/396884783"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/BigShuiTai/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://www.zhihu.com/people/keonume"
+			target="_blank"
+			mdui-tooltip="{content: '知乎'}"
+			style="
+				color: rgb(5, 109, 232);
+				background-color: rgba(5, 109, 232, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-zhihu"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://weibo.com/u/7375195654"
+			target="_blank"
+			mdui-tooltip="{content: '微博'}"
+			style="
+				color: rgb(227, 36, 40);
+				background-color: rgba(227, 36, 40, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-weibo"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:dapiya@qq.com"
+			target="_blank"
+			mdui-tooltip="{content: 'E-Mail'}"
+			style="
+				color: rgb(5, 109, 232);
+				background-color: rgba(5, 109, 232, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(235, 152, 0);
+				background-color: rgba(235, 152, 0, .15);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Linux/">Linux</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Other/">Other</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Windows/">Windows</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/40HX/" style="font-size: 10px;">40HX</a> <a href="/tags/AMD/" style="font-size: 10px;">AMD</a> <a href="/tags/Clonezilla/" style="font-size: 10px;">Clonezilla</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/MI50/" style="font-size: 10px;">MI50</a> <a href="/tags/NVIDIA/" style="font-size: 10px;">NVIDIA</a> <a href="/tags/ROCm/" style="font-size: 10px;">ROCm</a> <a href="/tags/RTW89/" style="font-size: 10px;">RTW89</a> <a href="/tags/Ubuntu/" style="font-size: 20px;">Ubuntu</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(9);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Archive</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/">2025</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Recent Posts</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/cmp-40hx.html">NVIDIA CMP-40HX 使用感想与踩坑记录</a>
+          </li>
+        
+          <li>
+            <a href="/clonezilla-usage.html">使用Clonezilla（再生龙）克隆Ubuntu系统</a>
+          </li>
+        
+          <li>
+            <a href="/mi50-rocm-install.html">在Ubuntu 22.04上安装MI50显卡驱动和ROCm软件</a>
+          </li>
+        
+          <li>
+            <a href="/ubuntu-rtw89.html">在Ubuntu 22.04.1 LTS上安装Realtek 8852BE网卡驱动</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/29/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2025 Shuitai
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+    
+        <div class="nexmoe-post-cover"> 
+            <img src="https://www.dmoe.cc/random.php" alt="NVIDIA CMP-40HX 使用感想与踩坑记录" loading="lazy">
+            <h1>NVIDIA CMP-40HX 使用感想与踩坑记录</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2025年12月25日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Windows/">Windows</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <p>作为垃圾佬，最近装机瘾又犯了，忍不住入手了一块被B站各UP主称赞的“无头骑士”CMP-40HX，据说该矿卡由RTX 2060 Super阉割而来。</p>
+<p>看了一下矿卡攻略，某宝叠券叠金币能把价格干到300块甚至更低，还带质保，是比较有性价比的。但究竟好不好用还是得靠实战。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>40HX只有华硕一家，其使用的散热模具是<a target="_blank" rel="noopener" href="https://www.asus.com.cn/motherboards-components/graphics-cards/dual/dual-rtx2060s-a8g-evo-v2/techspec/">这个型号</a>。这张卡作为“无头骑士”，自然没有视频输出，所以尽管挡板部分没有去掉输出接口，但它是不能用的。因此在使用这张卡之前，需要准备一个带核显的CPU（Intel 4代以上），或者一个用于输出的亮机卡（需要主板带两个x16长度的pcie槽）。</li>
+<li>这张卡最大的缺陷是PCIe通道被阉割得只剩1.1x4，以及半精度被大砍。万幸的是，PCIe通道不全的问题可以靠补全金手指上方的电容解决，即从1.1x4补到1.1x16（大致等效3.0x4）。而大部分商家现在为了能更好的卖出去这种矿卡，一般都会补上这组电容，因此在挑选的时候最好优先考虑补全电容的版本；而在计算方面，由于半精度被大幅阉割，只能用单精度去运行AI模型，而这样会导致显存容量占用暴增，对于这个只有8G显存的矿卡是不够用的，因此不建议将这张卡用于AI绘图等方面，打游戏就够了。</li>
+<li>矿卡的运作环境懂得都懂。有些地方可能环境比较好，拿到手可能发现仅有一些浮灰；另一些地方发货到手可能是灰头土脸、锈迹斑斑，随时都有挂掉的风险。如果你打算要长时间使用这种卡，最好在质保期过了之后立刻拆开进行大保养，否则可能没多久就挂了。至于如何保养可以去看B站UP主们怎么做的。</li>
+<li>关于驱动，这张矿卡是不能直接用官方驱动的，需要使用<strong>魔改驱动</strong>。这里提供两个可以使用的魔改驱动：<a target="_blank" rel="noopener" href="https://github.com/dartraiden/NVIDIA-patcher">NVIDIA-patcher</a>和<a target="_blank" rel="noopener" href="https://raincandy.tech/nvcmpgpu/">雨糖魔改版驱动</a>。它们各有自己的安装方法，需要仔细参阅文档。对用于输出的核显和亮机卡，同样需要打上它们对应的驱动。</li>
+<li>想让系统默认用40HX，需要手动设置高性能显卡和DirectX/OpenGL默认渲染GPU等内容。这部分操作可以在B站上查到，也可以参考我后续的说明。</li>
+<li><strong>最终声明</strong>，我<strong>极不推荐</strong>大家去买这种矿卡。如有能力，请直接购买消费级显卡，<strong>不要因为贪小便宜而带来更多的麻烦</strong>。</li>
+</ol>
+<h2 id="到手记录与使用感想"><a href="#到手记录与使用感想" class="headerlink" title="到手记录与使用感想"></a>到手记录与使用感想</h2><p>我手里的这张40HX来自于某宝的六菱电子，发货地在四川成都，叠券叠金币后的价格在300元出头，带有三个月的质保。</p>
+<p>到手拆开快递之后，我对这张卡的第一印象是：挺大一块的，看着比较唬人。但仔细一看，散热器就两根热管，散热效果可以说是相当差的了。好在这张卡功耗并不高（184W左右），正常来说应该压得下温度的。</p>
+<p>显卡的成色也比较干净，没有任何的生锈或氧化腐蚀的痕迹，里面只有少量干燥浮灰。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic1.jpg" alt="pic01" data-caption="pic01" loading="lazy"><br><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic2.jpg" alt="pic02" data-caption="pic02" loading="lazy"></p>
+<p>首先上机，由于本人使用的CPU为R5 5600，没有核显，只能弄一张亮机卡当视频输出，最后从750ti和RX6500之间选择了后者（后续有解释）。</p>
+<p>装好之后开机，40HX的RGB灯条闪亮出场，显得它高端上档次，不愧是专业矿卡。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic3.jpg" alt="pic03" data-caption="pic03" loading="lazy"><br><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic4.jpg" alt="pic04" data-caption="pic04" loading="lazy"></p>
+<p>上机测试环节，我使用的是雨糖魔改版驱动，驱动链接和安装方法在上面提供的链接中查看。GPU-Z显示的参数如下：</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic5.png" alt="pic05" data-caption="pic05" loading="lazy"></p>
+<p>可以发现，这张矿卡确实是由RTX 2060 Super阉割而来的，除PCIe通道外，其余参数基本一致。而和其他同类型矿卡有所不同的是，40HX保留了视频编解码：</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic6.png" alt="pic06" data-caption="pic06" loading="lazy"></p>
+<p>GPGPU测试中，看起来单精度没有被动过，实际上半精度性能被大砍了一刀，后续会有解释。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic7.png" alt="pic07" data-caption="pic07" loading="lazy"></p>
+<p>3D Mark测试中，TS跑分为8356，水平还不错。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic8.png" alt="pic08" data-caption="pic08" loading="lazy"></p>
+<p>在游戏表现上，对比其他同类型矿卡是强很多的，在1080p上能够流畅游玩大部分游戏。</p>
+<p>由于本人电脑没有那么多游戏供测试，只能在下面放一张黑神话的测试结果。对这张显卡的游戏测评大多可以在B站找到：</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic9.jpg" alt="pic09" data-caption="pic09" loading="lazy"></p>
+<p>用它玩了几天游戏，感觉还不错。个人认为40HX在现在挺有性价比的，淘宝价格也来到了300出头甚至更低，就算是一年质保也就加个四五十块钱，性能比P106-100和30HX这类矿卡强一些，在2K及以下分辨率玩游戏也算是不错的。</p>
+<p>像我在1080p分辨率的情况下，猎人荒野的召唤玩起来相当流畅；在Minecraft上不开光影能保持在300fps左右（需要优化模组），开了光影也有一部分能到60fps以上；而对于osu!这类音游，基本上也能稳定高帧率，就是延迟稍微有点高，大概平均在3.5ms到5ms之间，比原来的平均1.6ms高了不少。如果自己的CPU能够保持稳定运行这类游戏，那么高刷新率不是问题，需要担心的点在延迟上。延迟来自于显卡之间的数据传输，因此除了矿卡以外，最重要的还是亮机卡的性能，既不能太弱也不能强过矿卡（不然太强我要矿卡有啥用）；对于fps游戏应该也是同样的道理，如有不对可以在评论区指出。</p>
+<p>不过由于这类无头显卡要走核显或亮机卡，一通损耗下来，也只是强的有限，和正经显卡对比也就那样，更何况隔壁AMD同样是矿卡的5600XT和5700XT性能还更强。</p>
+<h2 id="踩坑记录1：亮机卡选择"><a href="#踩坑记录1：亮机卡选择" class="headerlink" title="踩坑记录1：亮机卡选择"></a>踩坑记录1：亮机卡选择</h2><p>之前有提及过，我手里既有一张750ti，也有一张RX6500，分别代表的是N家和A家。我分别插在第二个PCIe插槽上当亮机卡，速率为3.0x4。</p>
+<p>750ti的最大劣势是HDMI版本太低，只能跑个1080p 120hz，RX6500可以跑满这个1080p 200hz的屏幕。</p>
+<p>结果我在测试的过程中，两种N卡组一起反而发生了很麻烦的事情：Minecraft的画面撕裂非常严重，而且其他游戏的帧率也一样被严重限制。而我换到RX6500之后反而没有再出现这个问题了。</p>
+<p>看得出来两个N卡的冲突概率是相当的高。我至今还没有发现是什么原因，目前还在排查中（目前推测是750ti太老而且性能太弱）。</p>
+<h2 id="踩坑记录2：高性能显卡选择"><a href="#踩坑记录2：高性能显卡选择" class="headerlink" title="踩坑记录2：高性能显卡选择"></a>踩坑记录2：高性能显卡选择</h2><p>建议参照以下截图列出的步骤顺序进行，其中后面的两个脚本都需要管理员操作。运行<code>patch_drv</code>脚本时，建议按照提示进行操作；在<code>选择默认GPU_v1.1</code>脚本中，分别选择选项2和选项3，然后在它们的下一步选项中选择你的矿卡所展示的编号，再输入y并回车，之后重启就能完成游戏时显卡的默认选择了。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://libs.dapiya.cn/img/40hx_pic10.png" alt="pic10" data-caption="pic10" loading="lazy"></p>
+<p>以上提及的两个脚本都可以在<a target="_blank" rel="noopener" href="https://raincandy.tech/nvcmpgpu/">雨糖魔改版驱动</a>中的<code>下载地址</code>找到；NVIDIA App需要自行前往NVIDIA官网下载；亮机卡如果是AMD的去AMD官网，是Intel的去Intel官网，以此类推。</p>
+<h2 id="踩坑记录3：半精度性能"><a href="#踩坑记录3：半精度性能" class="headerlink" title="踩坑记录3：半精度性能"></a>踩坑记录3：半精度性能</h2><p>这里忘记了截图，但我对这个测试有大致的记录。</p>
+<p>在Stable Diffusion XL下运行半精度模型，生成一张简单的512×512图像竟然需要长达一分钟，1024×1024更是超级加倍到五分钟，同一个SDXL模型下对比Tesla M40这种老计算卡甚至更慢。而使用显存占用小的Stable Diffusion 1.5下运行单精度模型，同样的512×512图像则只需要6秒。</p>
+<p>这已经很明显了，半精度就是被砍过的。除非找一位手眼通天的维修佬把显存扩到16G，否则用单精度跑AI绘图是不现实的。</p>
+
+    
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>Shuitai<br>
+        <strong>Link：</strong><a href="https://bigshuitai.github.io/cmp-40hx.html" title="https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;cmp-40hx.html" target="_blank" rel="noopener">https:&#x2F;&#x2F;bigshuitai.github.io&#x2F;cmp-40hx.html</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/40HX/" rel="tag">40HX</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/NVIDIA/" rel="tag">NVIDIA</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          
+          
+              <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://priesttomb.github.io/js/md5.min.js"></script>
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script type="text/javascript">
+    let gitalk = new Gitalk({
+        clientID: '9625cce808d462e02e35',
+        clientSecret: '3c92e16b433320d2c806ed3467e6ec3786892f27',
+        repo: 'BigShuiTai.github.io',
+        owner: 'BigShuiTai',
+        admin: 'BigShuiTai',
+        id: md5(location.pathname),
+        distractionFreeMode: true,
+        proxy: 'https://cors-anywhere.dapiya.top/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+</script>
+          
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B0%E6%89%8B%E8%AE%B0%E5%BD%95%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%84%9F%E6%83%B3"><span class="toc-number">2.</span> <span class="toc-text">到手记录与使用感想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%951%EF%BC%9A%E4%BA%AE%E6%9C%BA%E5%8D%A1%E9%80%89%E6%8B%A9"><span class="toc-number">3.</span> <span class="toc-text">踩坑记录1：亮机卡选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%952%EF%BC%9A%E9%AB%98%E6%80%A7%E8%83%BD%E6%98%BE%E5%8D%A1%E9%80%89%E6%8B%A9"><span class="toc-number">4.</span> <span class="toc-text">踩坑记录2：高性能显卡选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%953%EF%BC%9A%E5%8D%8A%E7%B2%BE%E5%BA%A6%E6%80%A7%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text">踩坑记录3：半精度性能</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="Search"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1766603208245"></script>
+
+
+
+</body>
+
+</html>
